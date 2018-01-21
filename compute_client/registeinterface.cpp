@@ -6,9 +6,8 @@ registeinterface::registeinterface(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::registeinterface)
 {
-
     ui->setupUi(this);
-     ui->passwordLine->setEchoMode(QLineEdit::Password);
+    (ui->passwordLine)->setEchoMode(QLineEdit::Password);
 }
 
 registeinterface::~registeinterface()
@@ -19,12 +18,16 @@ registeinterface::~registeinterface()
 void registeinterface::on_okButton_clicked()
 {
     emit reshowsignal();
-    QString account=ui->phoneLine->text();
-    QString passowrd=ui->passwordLine->text();
+    QString account=(ui->phoneLine)->text();
+    QString passowrd=(ui->passwordLine)->text();
     dataBase d;
     d.createConnection();
-    if(account!=""&&passowrd!=""){
-    d.insert(account,passowrd);
+    d.createTable();
+    if(account!=""&& passowrd!=""){
+
+    if( d.insert(account,passowrd)){
+      QMessageBox::warning(this,tr("Notice"),tr("Success register!"),QMessageBox::Yes);
+    }
     } else{
        QMessageBox::warning(this,tr("Warning"),tr("Please enter the account or password"),QMessageBox::Yes);
     }

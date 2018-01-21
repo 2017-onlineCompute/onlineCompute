@@ -6,13 +6,12 @@ dataBase::dataBase()
 }
 bool dataBase::createConnection()
 {
-    //以后就可以用"sqlite1"与数据库进行连接了
-    //QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE", "sqlite1");
     QSqlDatabase db;
-    if(QSqlDatabase::contains("sqlite1"))
-      db = QSqlDatabase::database("sqlite1");
+    if(QSqlDatabase::contains("qt_sql_default_connection"))
+      db = QSqlDatabase::database("qt_sql_default_connection");
     else
       db = QSqlDatabase::addDatabase("QSQLITE", "sqlite1");
+    qDebug() << "无法建立数据库连接";
     db.setDatabaseName(".//qtDb.db");
     if( !db.open())
     {
@@ -81,12 +80,10 @@ bool dataBase::selectByaccount(QString account,QString password)
 {
     QSqlDatabase db = QSqlDatabase::database("sqlite1"); //建立数据库连接
     QSqlQuery query(db);
-//    query.prepare(QString("select password from usermessage where account = %1 and password=%2").arg(account).arg(password));
     query.prepare("select * from usermessage where account=?");
     query.addBindValue(account);
     query.exec();
     if( query.next()){
-        qDebug()<<"gh";
         qDebug()<<query.value(1).toString();
         if(password==query.value(1).toString()){
 

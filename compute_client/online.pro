@@ -1,16 +1,17 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2018-01-19T18:25:44
+# Project created by QtCreator 2018-01-20T20:26:03
 #
 #-------------------------------------------------
 
 QT       += core gui
+QT += sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-QT +=sql
-TARGET = onlinecompute
+TARGET = online
 TEMPLATE = app
+QMAKE_LFLAGS += -lboost_system -lboost_thread
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which as been marked as deprecated (the exact warnings
@@ -28,17 +29,16 @@ SOURCES += \
         main.cpp \
         clientinterface.cpp \
     registeinterface.cpp \
-    database.cpp
+    database.cpp \
+    clientdialog.cpp
 
 HEADERS += \
         clientinterface.h \
     registeinterface.h \
-    database.h
+    database.h \
+    clientdialog.h
 
 FORMS += \
         clientinterface.ui \
-    registeinterface.ui
-
-DISTFILES += \
-    RegisterForm.ui.qml \
-    Register.qml
+    registeinterface.ui \
+    clientdialog.ui

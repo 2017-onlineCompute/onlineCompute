@@ -43,19 +43,22 @@ void ClientDialog::okClicked()
 {
     QString text = (ui->inputEdit)->text();
 
-    char buf[BUFSIZE];
+        char buf[BUFSIZE];
 
-    strcpy(buf,text.toLocal8Bit().data());
-    qDebug()<< buf;
-    sock.write_some(buffer(buf));
+        strcpy(buf,text.toLocal8Bit().data());
+        qDebug()<< buf;
+        sock.write_some(buffer(buf));
+        memset(buf,'\0',sizeof(buf)/sizeof(char));
 
-    char result[BUFSIZE];
-    sock.read_some(buffer(result));
-    QString res = QString(QLatin1String(result));
+        char result[BUFSIZE];
+        sock.read_some(buffer(result));
+        QString res = QString(QLatin1String(result));
 
-    (ui->resultEdit)->setText(res);
-    qDebug()<< (ui->resultEdit)->text();
+        (ui->resultEdit)->setText(res);
+        qDebug()<< (ui->resultEdit)->text();
+        memset(result,'\0',sizeof(result)/sizeof(char));
 
+//
 }
 
 void ClientDialog::enableOkButton(const QString &text)
